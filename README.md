@@ -2,6 +2,20 @@
 
 A collection of custom agents and slash commands for Claude Code that streamline code exploration, planning, and implementation.
 
+## Installation
+
+Install this plugin using Claude Code's plugin system:
+
+```bash
+# Add the marketplace
+/plugin marketplace add tedmondh/claude-workflow
+
+# Install the plugin
+/plugin install claude-workflow@tedmondh
+```
+
+After installation, run `/help` to see the newly available commands.
+
 ## Quick Start
 
 ```bash
