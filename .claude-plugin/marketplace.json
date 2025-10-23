@@ -1,0 +1,30 @@
+{
+  "name": "claude-workflow",
+  "owner": {
+    "name": "Tedmond"
+  },
+  "metadata": {
+    "description": "Structured workflows for code exploration, planning, and implementation with Claude Code",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "claude-workflow-tools",
+      "source": "./",
+      "description": "Complete workflow toolkit with specialized agents and slash commands for systematic code development",
+      "version": "1.0.5",
+      "author": {
+        "name": "Tedmond"
+      },
+      "keywords": [
+        "workflow",
+        "planning",
+        "implementation",
+        "validation",
+        "codebase-exploration",
+        "agents"
+      ],
+      "category": "Workflow"
+    }
+  ]
+}
