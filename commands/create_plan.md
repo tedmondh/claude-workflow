@@ -7,11 +7,13 @@ You are tasked with creating detailed implementation plans through an interactiv
 When this command is invoked:
 
 1. **Check if parameters were provided**:
+
    - If a file path or ticket reference was provided as a parameter, skip the default message
    - Immediately read any provided files FULLY
    - Begin the research process
 
 2. **If no parameters provided**, respond with:
+
 ```
 I'll help you create a detailed implementation plan. Let me start by understanding what we're building.
 
@@ -31,6 +33,7 @@ Then wait for the user's input.
 ## Codebase Context
 
 Before starting research:
+
 - **IMPORTANT**: Review `CLAUDE.md` (or equivalent project documentation) in the repository root for:
   - Architecture overview and patterns to follow
   - Technology stack and framework details
@@ -44,6 +47,7 @@ Before starting research:
 ### Step 1: Context Gathering & Initial Analysis
 
 1. **Read all mentioned files immediately and FULLY**:
+
    - Ticket files (e.g., `thoughts/shared/tickets/eng_1234.md`)
    - Research documents
    - Related implementation plans
@@ -55,27 +59,31 @@ Before starting research:
 2. **Spawn initial research tasks to gather context**:
    Before asking the user any questions, use specialized agents to research in parallel:
 
-   - Use the **codebase-locator** agent to find all files related to the ticket/task
-   - Use the **codebase-analyzer** agent to understand how the current implementation works
+   - Use the **claude-workflow:codebase-locator** agent to find all files related to the ticket/task
+   - Use the **claude-workflow:codebase-analyzer** agent to understand how the current implementation works
 
    These agents will:
+
    - Find relevant source files, configs, and tests
    - Identify the specific directories to focus on (e.g., if sequence-service is mentioned, they'll focus on apps/sequence-service/)
    - Trace data flow and key functions
    - Return detailed explanations with file:line references
 
 3. **Read all files identified by research tasks**:
+
    - After research tasks complete, read ALL files they identified as relevant
    - Read them FULLY into the main context
    - This ensures you have complete understanding before proceeding
 
 4. **Analyze and verify understanding**:
+
    - Cross-reference the ticket requirements with actual code
    - Identify any discrepancies or misunderstandings
    - Note assumptions that need verification
    - Determine true scope based on codebase reality
 
 5. **Present informed understanding and focused questions**:
+
    ```
    Based on the ticket and my research of the codebase, I understand we need to [accurate summary].
 
@@ -97,6 +105,7 @@ Before starting research:
 After getting initial clarifications:
 
 1. **If the user corrects any misunderstanding**:
+
    - DO NOT just accept the correction
    - Spawn new research tasks to verify the correct information
    - Read the specific files/directories they mention
@@ -105,24 +114,28 @@ After getting initial clarifications:
 2. **Create a research todo list** using TodoWrite to track exploration tasks
 
 3. **Spawn parallel sub-tasks for comprehensive research**:
+
    - Create multiple Task agents to research different aspects concurrently
    - Use the right agent for each type of research:
 
    **For deeper investigation:**
-   - **codebase-locator** - To find more specific files (e.g., "find all files that handle [specific component]")
-   - **codebase-analyzer** - To understand implementation details (e.g., "analyze how [system] works")
-   - **codebase-pattern-finder** - To find similar features we can model after
+
+   - **claude-workflow:codebase-locator** - To find more specific files (e.g., "find all files that handle [specific component]")
+   - **claude-workflow:codebase-analyzer** - To understand implementation details (e.g., "analyze how [system] works")
+   - **claude-workflow:codebase-pattern-finder** - To find similar features we can model after
 
    Each agent knows how to:
+
    - Find the right files and code patterns
    - Identify conventions and patterns to follow
    - Look for integration points and dependencies
    - Return specific file:line references
    - Find tests and examples
 
-3. **Wait for ALL sub-tasks to complete** before proceeding
+4. **Wait for ALL sub-tasks to complete** before proceeding
 
-4. **Present findings and design options**:
+5. **Present findings and design options**:
+
    ```
    Based on my research, here's what I found:
 
@@ -146,6 +159,7 @@ After getting initial clarifications:
 Once aligned on approach:
 
 1. **Create initial plan outline**:
+
    ```
    Here's my proposed plan structure:
 
@@ -192,6 +206,7 @@ After structure approval:
 [A Specification of the desired end state after this plan is complete, and how to verify it]
 
 ### Key Discoveries:
+
 - [Important finding with file:line reference]
 - [Pattern to follow]
 - [Constraint to work within]
@@ -207,11 +222,13 @@ After structure approval:
 ## Phase 1: [Descriptive Name]
 
 ### Overview
+
 [What this phase accomplishes]
 
 ### Changes Required:
 
 #### 1. [Component/File Group]
+
 **File**: `path/to/file.ext`
 **Changes**: [Summary of changes]
 
@@ -222,6 +239,7 @@ After structure approval:
 ### Success Criteria:
 
 #### Automated Verification:
+
 - [ ] Unit tests pass: [Insert appropriate test command from CLAUDE.md]
   - Example: `npm test`, `nx test [project]`, `pytest`, etc.
   - Include information about working directory and project scope
@@ -229,6 +247,7 @@ After structure approval:
 - [ ] Type checking passes: [Insert type checking command if applicable]
 
 #### Manual Verification:
+
 - [ ] Feature works as expected when tested via UI (only if applicable)
 - [ ] Performance is acceptable under load
 - [ ] Edge case handling verified manually
@@ -247,13 +266,16 @@ After structure approval:
 ## Testing Strategy
 
 ### Unit Tests:
+
 - [What to test]
 - [Key edge cases]
 
 ### Integration Tests:
+
 - [End-to-end scenarios]
 
 ### Manual Testing Steps:
+
 1. [Specific step to verify feature]
 2. [Another verification step]
 3. [Edge case to test manually]
@@ -276,6 +298,7 @@ After structure approval:
 ### Step 5: Review
 
 1. **Present the draft plan location**:
+
    ```
    I've created the initial implementation plan at:
    `thoughts/shared/plans/YYYY-MM-DD-ENG-XXXX-description.md`
@@ -288,6 +311,7 @@ After structure approval:
    ```
 
 2. **Iterate based on feedback** - be ready to:
+
    - Add missing phases
    - Adjust technical approach
    - Clarify success criteria (both automated and manual)
@@ -298,30 +322,35 @@ After structure approval:
 ## Important Guidelines
 
 1. **Be Skeptical**:
+
    - Question vague requirements
    - Identify potential issues early
    - Ask "why" and "what about"
    - Don't assume - verify with code
 
 2. **Be Interactive**:
+
    - Don't write the full plan in one shot
    - Get buy-in at each major step
    - Allow course corrections
    - Work collaboratively
 
 3. **Be Thorough**:
+
    - Read all context files COMPLETELY before planning
    - Research actual code patterns using parallel sub-tasks
    - Include specific file paths and line numbers
    - Write measurable success criteria with clear automated vs manual distinction
 
 4. **Be Practical**:
+
    - Focus on incremental, testable changes
    - Consider migration and rollback
    - Think about edge cases
    - Include "what we're NOT doing"
 
 5. **Track Progress**:
+
    - Use TodoWrite to track planning tasks
    - Update todos as you complete research
    - Mark planning tasks complete when done
@@ -338,6 +367,7 @@ After structure approval:
 **Always separate success criteria into two categories:**
 
 1. **Automated Verification** (can be run by execution agents):
+
    - Commands that can be run: `nx test api-server`, `nx run-many -t test --projects=api-server,front-end,sequence-service,retrofit-planning`, `poetry run ruff check src`, etc.
    - Specific files that should exist
    - Code compilation/type checking
@@ -350,15 +380,18 @@ After structure approval:
    - User acceptance criteria
 
 **Format example:**
+
 ```markdown
 ### Success Criteria:
 
 #### Automated Verification:
+
 - [ ] All unit tests pass: [test command from CLAUDE.md]
 - [ ] No linting errors: [linting command from CLAUDE.md]
 - [ ] API endpoint responds correctly: [verification command or curl test]
 
 #### Manual Verification:
+
 - [ ] New feature appears correctly in the UI
 - [ ] Performance is acceptable with expected data volume
 - [ ] Error messages are user-friendly
@@ -368,6 +401,7 @@ After structure approval:
 ## Common Patterns
 
 ### For Database Changes:
+
 - Start with schema/migration
 - Add store methods
 - Update business logic
@@ -375,6 +409,7 @@ After structure approval:
 - Update clients
 
 ### For New Features:
+
 - Research existing patterns first
 - Start with data model
 - Build backend logic
@@ -382,6 +417,7 @@ After structure approval:
 - Implement UI last
 
 ### For Refactoring:
+
 - Document current behavior
 - Plan incremental changes
 - Maintain backwards compatibility
@@ -412,6 +448,7 @@ When spawning research sub-tasks:
    - Don't accept results that seem incorrect
 
 Example of spawning multiple tasks:
+
 ```python
 # Spawn these tasks concurrently:
 tasks = [

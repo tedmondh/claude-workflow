@@ -5,19 +5,24 @@ You are tasked with validating that an implementation plan was correctly execute
 ## Initial Setup
 
 When invoked:
+
 1. **Determine context** - Are you in an existing conversation or starting fresh?
+
    - If existing: Review what was implemented in this session
    - If fresh: Need to discover what was done through git and codebase analysis
 
 2. **Locate the plan**:
+
    - If plan path provided, use it
    - Otherwise, search recent commits for plan references or ask user
 
 3. **Review project documentation**:
+
    - Read `CLAUDE.md` (or equivalent) for testing and verification commands
    - Understand the build system and code quality requirements
 
 4. **Gather implementation evidence**:
+
    ```bash
    # Check recent commits
    git log --oneline -n 20
@@ -35,11 +40,13 @@ If starting fresh or need more context:
 
 1. **Read the implementation plan** completely
 2. **Identify what should have changed**:
+
    - List all files that should be modified
    - Note all success criteria (automated and manual)
    - Identify key functionality to verify
 
 3. **Spawn parallel research tasks** to discover implementation:
+
    ```
    Task 1 - Verify database changes:
    Research if migration [N] was added and schema changes match plan.
@@ -62,15 +69,18 @@ If starting fresh or need more context:
 For each phase in the plan:
 
 1. **Check completion status**:
+
    - Look for checkmarks in the plan (- [x])
    - Verify the actual code matches claimed completion
 
 2. **Run automated verification**:
+
    - Execute each command from "Automated Verification"
    - Document pass/fail status
    - If failures, investigate root cause
 
 3. **Assess manual criteria**:
+
    - List what needs manual testing
    - Provide clear steps for user verification
 
@@ -87,11 +97,13 @@ Create comprehensive validation summary:
 ## Validation Report: [Plan Name]
 
 ### Implementation Status
+
 ✓ Phase 1: [Name] - Fully implemented
 ✓ Phase 2: [Name] - Fully implemented
 ⚠️ Phase 3: [Name] - Partially implemented (see issues)
 
 ### Automated Verification Results
+
 ✓ Build passes: [build command from plan]
 ✓ Tests pass: [test command from plan]
 ✗ Linting issues: [linting command from plan] (3 warnings)
@@ -99,20 +111,25 @@ Create comprehensive validation summary:
 ### Code Review Findings
 
 #### Matches Plan:
+
 - Database migration correctly adds [table]
 - API endpoints implement specified methods
 - Error handling follows plan
 
 #### Deviations from Plan:
+
 - Used different variable names in [file:line]
 - Added extra validation in [file:line] (improvement)
 
 #### Potential Issues:
+
 - Missing index on foreign key could impact performance
 - No rollback handling in migration
 
 ### Manual Testing Required:
+
 1. UI functionality:
+
    - [ ] Verify [feature] appears correctly
    - [ ] Test error states with invalid input
 
@@ -121,6 +138,7 @@ Create comprehensive validation summary:
    - [ ] Check performance with large datasets
 
 ### Recommendations:
+
 - Address linting warnings before merge
 - Consider adding integration test for [scenario]
 - Document new API endpoints
@@ -129,6 +147,7 @@ Create comprehensive validation summary:
 ## Working with Existing Context
 
 If you were part of the implementation:
+
 - Review the conversation history
 - Check your todo list for what was completed
 - Focus validation on work done in this session
@@ -145,6 +164,7 @@ If you were part of the implementation:
 ## Validation Checklist
 
 Always verify:
+
 - [ ] All phases marked complete are actually done
 - [ ] Automated tests pass
 - [ ] Code follows existing patterns
@@ -156,6 +176,7 @@ Always verify:
 ## Relationship to Other Commands
 
 Recommended workflow:
+
 1. `/implement_plan` - Execute the implementation
 2. `/validate_plan` - Verify implementation correctness
 
