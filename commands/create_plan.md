@@ -8,10 +8,16 @@ When this command is invoked:
 
 **Parameters provided:** $ARGUMENTS
 
+**Important:** Check if the user referenced files using `@filename` syntax. If they did:
+- The files will be available in the conversation context (already read)
+- Look for file paths in the user's message or in file references
+- Extract paths from any `@thoughts/shared/tickets/...` or other references
+- Use those as your ticket/context files
+
 1. **Check if parameters were provided**:
 
-   - If a file path or ticket reference was provided as a parameter, skip the default message
-   - Immediately read any provided files FULLY
+   - If a file path or ticket reference was provided (via argument or file reference), skip the default message
+   - Immediately read any provided files FULLY if not already in context
    - Begin the research process
 
 2. **If no parameters provided**, respond with:

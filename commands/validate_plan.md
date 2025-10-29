@@ -12,6 +12,12 @@ When invoked:
 
 **Parameters provided:** $ARGUMENTS
 
+**Important:** Check if the user referenced a plan file using `@filename` syntax. If they did:
+- The file will be available in the conversation context (already read)
+- Look for the file path in the user's message or in file references
+- Extract the path from any `@thoughts/shared/plans/...` reference
+- Use that as your plan file path
+
 1. **Determine context** - Are you in an existing conversation or starting fresh?
 
    - If existing: Review what was implemented in this session
@@ -19,7 +25,7 @@ When invoked:
 
 2. **Locate the plan**:
 
-   - If plan path provided, use it
+   - If plan path provided (via argument or file reference), use it
    - Otherwise, search recent commits for plan references or ask user
 
 3. **Review project documentation**:
