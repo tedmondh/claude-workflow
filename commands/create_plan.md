@@ -6,6 +6,8 @@ You are tasked with creating detailed implementation plans through an interactiv
 
 When this command is invoked:
 
+**Parameters provided:** $ARGUMENTS
+
 1. **Check if parameters were provided**:
 
    - If a file path or ticket reference was provided as a parameter, skip the default message

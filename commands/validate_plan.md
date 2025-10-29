@@ -1,3 +1,7 @@
+---
+argument-hint: thoughts/shared/plans/plan.md
+---
+
 # Validate Plan
 
 You are tasked with validating that an implementation plan was correctly executed, verifying all success criteria and identifying any deviations or issues.
@@ -5,6 +9,8 @@ You are tasked with validating that an implementation plan was correctly execute
 ## Initial Setup
 
 When invoked:
+
+**Parameters provided:** $ARGUMENTS
 
 1. **Determine context** - Are you in an existing conversation or starting fresh?
 

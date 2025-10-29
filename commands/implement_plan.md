@@ -1,8 +1,14 @@
+---
+argument-hint: thoughts/shared/plans/plan.md
+---
+
 # Implement Plan
 
 You are tasked with implementing an approved technical plan from `thoughts/shared/plans/`. These plans contain phases with specific changes and success criteria.
 
 ## Getting Started
+
+Plan file path: $ARGUMENTS
 
 When given a plan path:
 - Read the plan completely and check for any existing checkmarks (- [x])
