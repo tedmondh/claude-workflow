@@ -10,13 +10,7 @@ You are tasked with validating that an implementation plan was correctly execute
 
 When invoked:
 
-**Parameters provided:** $ARGUMENTS
-
-**Important:** Check if the user referenced a plan file using `@filename` syntax. If they did:
-- The file will be available in the conversation context (already read)
-- Look for the file path in the user's message or in file references
-- Extract the path from any `@thoughts/shared/plans/...` reference
-- Use that as your plan file path
+**Plan file path:** $ARGUMENTS
 
 1. **Determine context** - Are you in an existing conversation or starting fresh?
 
@@ -25,8 +19,9 @@ When invoked:
 
 2. **Locate the plan**:
 
-   - If plan path provided (via argument or file reference), use it
+   - If plan path provided as argument, use it
    - Otherwise, search recent commits for plan references or ask user
+   - Example path: `thoughts/shared/plans/2025-01-08-feature-name.md`
 
 3. **Review project documentation**:
 

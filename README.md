@@ -20,15 +20,17 @@ After installation, run `/help` to see the newly available commands.
 
 ```bash
 # 1. Create a detailed implementation plan
-/create_plan add user authentication feature
-# or just: /create_plan (it will prompt you)
+/claude-workflow:create_plan thoughts/shared/tickets/your-ticket.md
+# or just: /claude-workflow:create_plan (it will prompt you)
 
-# 2. Execute the plan
-/implement_plan path/to/plan.md
+# 2. Execute the plan (provide the file path as an argument)
+/claude-workflow:implement_plan thoughts/shared/plans/your-plan.md
 
 # 3. Validate the implementation
-/validate_plan path/to/plan.md
+/claude-workflow:validate_plan thoughts/shared/plans/your-plan.md
 ```
+
+**Note**: File paths must be provided as command arguments. While you can use `@` for file autocomplete in regular messages, slash commands require the path as a text argument.
 
 ## Structure
 

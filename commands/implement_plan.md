@@ -8,23 +8,19 @@ You are tasked with implementing an approved technical plan from `thoughts/share
 
 ## Getting Started
 
-**Arguments passed:** $ARGUMENTS
+**Plan file path:** $ARGUMENTS
 
-**Important:** Check if the user referenced a plan file using `@filename` syntax. If they did:
-- The file will be available in the conversation context (already read)
-- Look for the file path in the user's message or in file references
-- Extract the path from any `@thoughts/shared/plans/...` reference
-- Use that as your plan file path
-
-If a plan path was provided (either as argument or file reference):
-- Read the plan completely if not already in context, and check for any existing checkmarks (- [x])
+If a plan path was provided:
+- Read the plan completely and check for any existing checkmarks (- [x])
 - Read the original ticket and all files mentioned in the plan
 - **Read files fully** - never use limit/offset parameters, you need complete context
 - Think deeply about how the pieces fit together
 - Create a todo list to track your progress
 - Start implementing if you understand what needs to be done
 
-If no plan path provided, ask for one.
+If no plan path provided:
+- Ask the user to provide the path to the plan file in `thoughts/shared/plans/`
+- Example: `thoughts/shared/plans/2025-01-08-feature-name.md`
 
 ## Codebase Context
 
