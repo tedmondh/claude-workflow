@@ -18,7 +18,8 @@ This is a Claude Code plugin that provides structured workflows for code explora
 
 - `/create_plan` - Interactive planning workflow that researches codebase, asks questions, and writes plans to `thoughts/shared/plans/YYYY-MM-DD-description.md`
 - `/implement_plan <path>` - Executes approved plans phase-by-phase with automated verification
-- `/validate_plan <path>` - Validates implementation against plan specifications
+- `/validate_plan <path>` - Validates implementation against plan specifications, calls `/finalize_plan` on success
+- `/finalize_plan <path>` - Archives a completed plan: adds completion status, removes code examples, adds summary
 
 ### Agents (used by commands internally)
 

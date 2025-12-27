@@ -6,6 +6,8 @@ argument-hint: thoughts/shared/plans/plan.md
 
 You are tasked with validating that an implementation plan was correctly executed, verifying all success criteria and identifying any deviations or issues.
 
+**On successful validation**, this command automatically calls `/finalize_plan` to archive the plan with a completion status and summary.
+
 ## Initial Setup
 
 When invoked:
@@ -151,6 +153,24 @@ Create comprehensive validation summary:
 - Document new API endpoints
 ```
 
+### Step 4: Finalize or Report Issues
+
+**If all validation checks pass:**
+
+Automatically invoke `/finalize_plan` with the plan path to:
+- Mark the plan as completed
+- Clean up verbose code examples
+- Add an implementation summary
+
+Use the Skill tool to invoke finalize_plan, passing the plan file path.
+
+**If validation reveals issues:**
+
+- **Do NOT call finalize_plan** - The plan stays in its current state
+- **Document what failed** in the validation report
+- **Suggest specific fixes** for each issue
+- The user can re-run `/validate_plan` after fixing issues
+
 ## Working with Existing Context
 
 If you were part of the implementation:
@@ -180,12 +200,22 @@ Always verify:
 - [ ] Documentation updated if needed
 - [ ] Manual test steps are clear
 
+If validation passes:
+
+- [ ] Called `/finalize_plan` to archive the plan
+
 ## Relationship to Other Commands
 
 Recommended workflow:
 
-1. `/implement_plan` - Execute the implementation
-2. `/validate_plan` - Verify implementation correctness
+1. `/create_plan` - Design and document the implementation plan
+2. `/implement_plan` - Execute the implementation
+3. `/validate_plan` - Verify correctness (calls `/finalize_plan` on success)
+
+Or manually:
+
+1. `/validate_plan` - Check implementation (can run multiple times)
+2. `/finalize_plan` - Manually archive when ready
 
 The validation works best after commits are made, as it can analyze the git history to understand what was implemented.
 
