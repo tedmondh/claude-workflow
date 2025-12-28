@@ -64,7 +64,7 @@ Validates implementation completeness and generates verification report.
 
 ## Agents
 
-Specialized agents used during planning (primarily by `/create_plan`):
+Specialized agents used during planning (primarily by `/claude-workflow:create_plan`):
 
 - **codebase-locator**: Finds WHERE code lives (files, directories, components)
 - **codebase-analyzer**: Understands HOW code works (implementation details, data flow)

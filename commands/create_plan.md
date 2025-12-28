@@ -477,7 +477,7 @@ When spawning research sub-tasks:
 ## Example Interaction Flow
 
 ```
-User: /create_plan
+User: /claude-workflow:create_plan
 Assistant: I'll help you create a detailed implementation plan...
 
 User: We need to add parent-child tracking for Claude sub-tasks.

@@ -6,7 +6,7 @@ argument-hint: thoughts/shared/plans/plan.md
 
 You are tasked with finalizing a completed implementation plan - marking it as complete, cleaning up verbose content, and creating a concise summary for future reference.
 
-This command is typically called automatically by `/validate_plan` after successful validation, but can also be run standalone when you're confident the implementation is complete.
+This command is typically called automatically by `/claude-workflow:validate_plan` after successful validation, but can also be run standalone when you're confident the implementation is complete.
 
 **Plan file path:** $ARGUMENTS
 
@@ -16,9 +16,9 @@ Before finalizing, ensure:
 
 - The implementation is complete
 - All automated tests pass
-- The plan has been validated (via `/validate_plan` or manual review)
+- The plan has been validated (via `/claude-workflow:validate_plan` or manual review)
 
-If you're unsure whether the implementation is complete, run `/validate_plan` first.
+If you're unsure whether the implementation is complete, run `/claude-workflow:validate_plan` first.
 
 ## Finalization Process
 
@@ -227,7 +227,7 @@ Added SearchBar component with debounced input and result highlighting.
 
 ## Relationship to Other Commands
 
-- `/create_plan` - Creates the initial implementation plan
-- `/implement_plan` - Executes the plan
-- `/validate_plan` - Verifies implementation, then calls `/finalize_plan` on success
-- `/finalize_plan` - Archives the plan (this command)
+- `/claude-workflow:create_plan` - Creates the initial implementation plan
+- `/claude-workflow:implement_plan` - Executes the plan
+- `/claude-workflow:validate_plan` - Verifies implementation, then calls `/claude-workflow:finalize_plan` on success
+- `/claude-workflow:finalize_plan` - Archives the plan (this command)

@@ -6,7 +6,7 @@ argument-hint: thoughts/shared/plans/plan.md
 
 You are tasked with validating that an implementation plan was correctly executed, verifying all success criteria and identifying any deviations or issues.
 
-**On successful validation**, this command automatically calls `/finalize_plan` to archive the plan with a completion status and summary.
+**On successful validation**, this command automatically calls `/claude-workflow:finalize_plan` to archive the plan with a completion status and summary.
 
 ## Initial Setup
 
@@ -157,19 +157,19 @@ Create comprehensive validation summary:
 
 **If all validation checks pass:**
 
-Automatically invoke `/finalize_plan` with the plan path to:
+Automatically invoke `/claude-workflow:finalize_plan` with the plan path to:
 - Mark the plan as completed
 - Clean up verbose code examples
 - Add an implementation summary
 
-Use the Skill tool to invoke finalize_plan, passing the plan file path.
+Use the Skill tool to invoke claude-workflow:finalize_plan, passing the plan file path.
 
 **If validation reveals issues:**
 
 - **Do NOT call finalize_plan** - The plan stays in its current state
 - **Document what failed** in the validation report
 - **Suggest specific fixes** for each issue
-- The user can re-run `/validate_plan` after fixing issues
+- The user can re-run `/claude-workflow:validate_plan` after fixing issues
 
 ## Working with Existing Context
 
@@ -202,20 +202,20 @@ Always verify:
 
 If validation passes:
 
-- [ ] Called `/finalize_plan` to archive the plan
+- [ ] Called `/claude-workflow:finalize_plan` to archive the plan
 
 ## Relationship to Other Commands
 
 Recommended workflow:
 
-1. `/create_plan` - Design and document the implementation plan
-2. `/implement_plan` - Execute the implementation
-3. `/validate_plan` - Verify correctness (calls `/finalize_plan` on success)
+1. `/claude-workflow:create_plan` - Design and document the implementation plan
+2. `/claude-workflow:implement_plan` - Execute the implementation
+3. `/claude-workflow:validate_plan` - Verify correctness (calls `/claude-workflow:finalize_plan` on success)
 
 Or manually:
 
-1. `/validate_plan` - Check implementation (can run multiple times)
-2. `/finalize_plan` - Manually archive when ready
+1. `/claude-workflow:validate_plan` - Check implementation (can run multiple times)
+2. `/claude-workflow:finalize_plan` - Manually archive when ready
 
 The validation works best after commits are made, as it can analyze the git history to understand what was implemented.
 
