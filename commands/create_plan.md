@@ -197,7 +197,7 @@ After structure approval:
 
 1. **Write the plan** to `thoughts/shared/plans/YYYY-MM-DD-description.md`
    - Format: `YYYY-MM-DD-description.md` where:
-     - YYYY-MM-DD is today's date
+     - YYYY-MM-DD is today's date (use the exact date from the system <env> context)
      - description is a brief kebab-case description
    - Example: `2025-01-08-improve-error-handling.md`
 2. **Use this template structure**:

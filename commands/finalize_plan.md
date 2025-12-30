@@ -34,7 +34,7 @@ Add a status block at the very top of the plan (after any YAML frontmatter):
 
 ```markdown
 > **Status:** Completed
-> **Completed:** YYYY-MM-DD
+> **Completed:** YYYY-MM-DD (use today's date from the system <env> context)
 > **Summary:** [One sentence describing what was accomplished]
 ```
 
@@ -139,7 +139,7 @@ Report to the user:
 Plan finalized: [plan path]
 
 Changes made:
-- Added completion status (YYYY-MM-DD)
+- Added completion status with today's date
 - Condensed [N] phases from detailed instructions to summaries
 - Removed [N] code examples
 - Added implementation summary
