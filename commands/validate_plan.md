@@ -56,6 +56,13 @@ If starting fresh or need more context:
 
 3. **Spawn parallel research tasks** to discover implementation:
 
+   Use these agents for targeted investigation:
+   - `claude-workflow:codebase-locator` - Find files that were modified for this feature
+   - `claude-workflow:codebase-analyzer` - Understand what actually changed and how it works
+   - `claude-workflow:codebase-pattern-finder` - Compare implementation to similar patterns in the codebase
+
+   Example research tasks:
+
    ```
    Task 1 - Verify database changes:
    Research if migration [N] was added and schema changes match plan.
