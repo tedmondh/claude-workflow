@@ -94,10 +94,9 @@ When something isn't working as expected:
 - Consider if the codebase has evolved since the plan was written
 - Present the mismatch clearly and ask for guidance
 
-**If you need targeted research**, use these agents sparingly:
-- `claude-workflow:codebase-locator` - Find files you didn't know about
-- `claude-workflow:codebase-analyzer` - Understand adjacent code that affects your changes
-- `claude-workflow:codebase-pattern-finder` - Find similar patterns for unexpected edge cases
+**If you need targeted research**, use the built-in Explore agent sparingly:
+- **Explore** agent (quick) - Find files you didn't know about
+- **Explore** agent (medium) - Understand adjacent code or find similar patterns for unexpected edge cases
 
 The plan should have most context, but reality sometimes requires additional exploration.
 

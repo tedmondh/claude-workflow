@@ -43,6 +43,15 @@ Before starting research:
 
 ## Process Steps
 
+### Using the AskUserQuestion Tool
+
+Use the `AskUserQuestion` tool for discrete choices throughout this planning process. However, use natural text questions when:
+- The question is truly open-ended with unlimited valid answers
+- You need detailed explanations that don't fit 2-4 options
+- You can't anticipate reasonable options upfront
+
+The examples below show how to structure questions effectively for each step.
+
 ### Step 1: Context Gathering & Initial Analysis
 
 1. **Read all mentioned files immediately and FULLY**:
@@ -55,12 +64,11 @@ Before starting research:
    - **NEVER** read files partially - if a file is mentioned, read it completely
 
 2. **Spawn initial research tasks to gather context**:
-   Before asking the user any questions, use specialized agents to research in parallel:
+   Before asking the user any questions, use the built-in Explore agent to research in parallel:
 
-   - Use the **claude-workflow:codebase-locator** agent to find all files related to the task
-   - Use the **claude-workflow:codebase-analyzer** agent to understand how the current implementation works
+   - Use the **Explore** agent (very thorough) to find all files related to the task and understand how the current implementation works
 
-   These agents will:
+   The Explore agent will:
 
    - Find relevant source files, configs, and tests
    - Identify the specific directories to focus on (e.g., if sequence-service is mentioned, they'll focus on apps/sequence-service/)
@@ -80,8 +88,9 @@ Before starting research:
    - Note assumptions that need verification
    - Determine true scope based on codebase reality
 
-5. **Present informed understanding and focused questions**:
+5. **Present informed understanding and gather clarifications**:
 
+   First, present your findings as text:
    ```
    Based on my research of the codebase, I understand we need to [accurate summary].
 
@@ -89,14 +98,30 @@ Before starting research:
    - [Current implementation detail with file:line reference]
    - [Relevant pattern or constraint discovered]
    - [Potential complexity or edge case identified]
-
-   Questions that my research couldn't answer:
-   - [Specific technical question that requires human judgment]
-   - [Business logic clarification]
-   - [Design preference that affects implementation]
    ```
 
-   Only ask questions that you genuinely cannot answer through code investigation.
+   Then, use the `AskUserQuestion` tool for any clarifications needed. Convert questions into structured choices where possible:
+
+   **Example - instead of asking:**
+   > "How should we handle authentication?"
+
+   **Use AskUserQuestion:**
+   ```json
+   {
+     "questions": [{
+       "question": "How should we handle authentication for this feature?",
+       "header": "Auth",
+       "options": [
+         { "label": "Use existing auth (Recommended)", "description": "Integrate with the current authentication system" },
+         { "label": "New auth flow", "description": "Create a separate authentication mechanism" },
+         { "label": "No auth needed", "description": "This feature doesn't require authentication" }
+       ],
+       "multiSelect": false
+     }]
+   }
+   ```
+
+   Only use natural text questions for truly open-ended clarifications that can't be structured into 2-4 options.
 
 ### Step 2: Research & Discovery
 
@@ -118,11 +143,10 @@ After getting initial clarifications:
 
    **For deeper investigation:**
 
-   - **claude-workflow:codebase-locator** - To find more specific files (e.g., "find all files that handle [specific component]")
-   - **claude-workflow:codebase-analyzer** - To understand implementation details (e.g., "analyze how [system] works")
-   - **claude-workflow:codebase-pattern-finder** - To find similar features we can model after
+   - **Explore** agent (very thorough) - For comprehensive file discovery, implementation analysis, or finding similar patterns to model after
+   - **Explore** agent (quick) - For targeted lookups when you know roughly what you're looking for
 
-   Each agent knows how to:
+   The Explore agent knows how to:
 
    - Find the right files and code patterns
    - Identify conventions and patterns to follow
@@ -132,25 +156,47 @@ After getting initial clarifications:
 
 4. **Wait for ALL sub-tasks to complete** before proceeding
 
-5. **Present findings and design options**:
+5. **Present findings and gather design decisions**:
 
+   First, present your research findings as text:
    ```
    Based on my research, here's what I found:
 
    **Current State:**
    - [Key discovery about existing code]
    - [Pattern or convention to follow]
-
-   **Design Options:**
-   1. [Option A] - [pros/cons]
-   2. [Option B] - [pros/cons]
-
-   **Open Questions:**
-   - [Technical uncertainty]
-   - [Design decision needed]
-
-   Which approach aligns best with your vision?
    ```
+
+   Then, use the `AskUserQuestion` tool for design decisions. This is where structured questions shine - presenting trade-offs clearly:
+
+   **Example:**
+   ```json
+   {
+     "questions": [
+       {
+         "question": "Which implementation approach should we use?",
+         "header": "Approach",
+         "options": [
+           { "label": "Option A (Recommended)", "description": "[Brief description] - Pros: [x], Cons: [y]" },
+           { "label": "Option B", "description": "[Brief description] - Pros: [x], Cons: [y]" }
+         ],
+         "multiSelect": false
+       },
+       {
+         "question": "Which additional features should we include?",
+         "header": "Features",
+         "options": [
+           { "label": "Feature X", "description": "Adds [capability]" },
+           { "label": "Feature Y", "description": "Adds [capability]" },
+           { "label": "None", "description": "Keep scope minimal" }
+         ],
+         "multiSelect": true
+       }
+     ]
+   }
+   ```
+
+   Group related decisions into a single `AskUserQuestion` call (up to 4 questions). Use `multiSelect: true` for feature/scope questions where multiple options can apply.
 
 ### Step 3: Plan Structure Development
 
@@ -189,7 +235,29 @@ Once aligned on approach:
    Does this phasing make sense? Should I adjust the order or granularity?
    ```
 
-4. **Get feedback on structure** before writing details
+4. **Get feedback on structure** using AskUserQuestion:
+
+   After presenting the outline, gather specific feedback:
+
+   ```json
+   {
+     "questions": [
+       {
+         "question": "Does this phasing make sense for the implementation?",
+         "header": "Phasing",
+         "options": [
+           { "label": "Yes, proceed (Recommended)", "description": "The phases are well-scoped and logical" },
+           { "label": "Combine phases", "description": "Some phases should be merged together" },
+           { "label": "Split phases", "description": "Some phases need to be broken down further" },
+           { "label": "Reorder phases", "description": "The sequence should be changed" }
+         ],
+         "multiSelect": false
+       }
+     ]
+   }
+   ```
+
+   If the user selects anything other than "Yes, proceed", ask a follow-up text question for specifics, then adjust accordingly
 
 ### Step 4: Detailed Plan Writing
 
@@ -310,18 +378,23 @@ Note: Unit tests are written within each phase alongside the code they test. Thi
 
 ### Step 5: Review
 
-1. **Present the draft plan location**:
+1. **Present the draft plan location and suggest session naming**:
 
    ```
    I've created the initial implementation plan at:
    `thoughts/shared/plans/YYYY-MM-DD-description.md`
 
-   Please review it and let me know:
+   To make this session easier to find later, consider renaming it:
+   /rename description-plan
+
+   Please review the plan and let me know:
    - Are the phases properly scoped?
    - Are the success criteria specific enough?
    - Any technical details that need adjustment?
    - Missing edge cases or considerations?
    ```
+
+   The suggested session name should match the plan filename's description (e.g., if the plan is `2026-01-20-oauth-integration.md`, suggest `/rename oauth-integration-plan`).
 
 2. **Iterate based on feedback** - be ready to:
 

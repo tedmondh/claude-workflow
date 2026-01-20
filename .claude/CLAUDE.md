@@ -4,45 +4,37 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This is a Claude Code plugin that provides structured workflows for code exploration, planning, and implementation. It includes specialized agents and slash commands.
+This is a Claude Code plugin that provides structured workflows for code exploration, planning, and implementation.
 
 ## Structure
 
-- `agents/` - Specialized agents for codebase research (markdown files with frontmatter)
 - `commands/` - Slash command definitions (markdown files with prompt templates)
 - `.claude-plugin/` - Plugin configuration (plugin.json, marketplace.json)
 
-## Plugin Components
-
-### Commands (user-invocable)
+## Commands (user-invocable)
 
 - `/claude-workflow:create_plan` - Interactive planning workflow that researches codebase, asks questions, and writes plans to `thoughts/shared/plans/YYYY-MM-DD-description.md`
 - `/claude-workflow:implement_plan <path>` - Executes approved plans phase-by-phase with automated verification
 - `/claude-workflow:validate_plan <path>` - Validates implementation against plan specifications, calls `/claude-workflow:finalize_plan` on success
 - `/claude-workflow:finalize_plan <path>` - Archives a completed plan: adds completion status, removes code examples, adds summary
 
-### Agents (used by commands internally)
+## Search Tools
 
-- `codebase-locator` - Finds WHERE code lives (files, directories)
-- `codebase-analyzer` - Understands HOW code works (implementation details, data flow)
-- `codebase-pattern-finder` - Finds similar implementations to model after
+When exploring beyond built-in tools, prefer:
+- `fd <pattern>` - Fast filename search (over `find`)
+- `rg "pattern"` - Fast text search (over `grep`)
+- `ast-grep --lang <lang> -p '<pattern>'` - AST-aware code search (over `rg` for code patterns)
+  - Wildcards: `$NAME` = single node, `$$$` = rest/multiple
 
-## Agent/Command File Format
+## Command File Format
 
-Agent and command files use YAML frontmatter:
+Command files use YAML frontmatter:
 
 ```yaml
 ---
-name: agent-name
+name: command-name
 description: Brief description shown in tool descriptions
-tools: Read, Grep, Glob, LS # Available tools for this agent
-model: inherit # Use parent model
+argument-hint: <file-path>  # Optional, for autocomplete
 ---
-[Prompt content with instructions]
+[Prompt content with $ARGUMENTS placeholder for passed arguments]
 ```
-
-Commands can include `argument-hint:` for file path autocomplete and `$ARGUMENTS` placeholder for passed arguments.
-
-## Design Philosophy
-
-Agents follow a "documentarian, not critic" approach - they describe what exists without suggesting improvements unless explicitly asked. This keeps research focused and prevents unwanted refactoring suggestions.

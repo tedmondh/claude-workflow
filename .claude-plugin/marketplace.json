@@ -12,7 +12,7 @@
       "name": "claude-workflow-tools",
       "source": "./",
       "description": "Complete workflow toolkit with specialized agents and slash commands for systematic code development",
-      "version": "1.0.9",
+      "version": "1.1.0",
       "author": {
         "name": "Tedmond"
       },
