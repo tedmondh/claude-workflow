@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Structured workflows for code exploration, planning, and implementation with Claude Code",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   "plugins": [
     {
-      "name": "claude-workflow-tools",
+      "name": "claude-workflow",
       "source": "./",
       "description": "Complete workflow toolkit with slash commands for systematic code development",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "author": {
         "name": "Tedmond"
       },
