@@ -14,6 +14,11 @@ Install this plugin using Claude Code's plugin system:
 /plugin install claude-workflow@tedmondh
 ```
 
+To uninstall:
+```bash
+/plugin uninstall claude-workflow@tedmondh
+```
+
 After installation, run `/help` to see the newly available commands.
 
 ## Quick Start
@@ -69,7 +74,7 @@ If Linear MCP isn't configured, you'll be prompted to either set it up or paste 
 
 ## Commands
 
-### 📋 /create_plan
+### 📋 /claude-workflow:create_plan
 
 Creates detailed implementation plans through interactive research and collaboration.
 
@@ -77,17 +82,23 @@ Creates detailed implementation plans through interactive research and collabora
 
 **Output**: `thoughts/shared/plans/YYYY-MM-DD-description.md`
 
-### 🛠️ /implement_plan
+### 🛠️ /claude-workflow:implement_plan
 
 Executes approved plans phase-by-phase with automated verification.
 
 **Process**: Read plan → Implement phase → Run tests/linting → Update checkboxes → Pause for manual testing
 
-### ✅ /validate_plan
+### ✅ /claude-workflow:validate_plan
 
 Validates implementation completeness and generates verification report.
 
 **Process**: Review commits → Run all checks → Compare to plan → Document deviations → Report status
+
+### 📦 /claude-workflow:finalize_plan
+
+Archives a completed plan after successful validation.
+
+**Process**: Add completion status → Remove code examples → Add summary → Mark as finalized
 
 ## File Conventions
 

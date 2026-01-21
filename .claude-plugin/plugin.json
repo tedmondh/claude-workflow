@@ -1,7 +1,7 @@
 {
   "name": "claude-workflow",
   "description": "A simple claude workflow with create_plan, implement_plan, validate_plan, finalize_plan",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": {
     "name": "Tedmond"
   }
