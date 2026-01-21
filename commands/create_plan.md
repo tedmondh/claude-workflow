@@ -8,13 +8,44 @@ When this command is invoked:
 
 **Parameters provided:** $ARGUMENTS
 
-1. **Check if parameters were provided**:
+1. **Check if a Linear ticket ID was provided** (pattern: `PREFIX-123`, e.g., `ADP-123`, `ENG-456`):
 
-   - If a file path or ticket reference was provided as an argument, skip the default message
-   - Immediately read any provided files FULLY
-   - Begin the research process
+   If a ticket ID is detected:
 
-2. **If no parameters provided**, respond with:
+   1. Attempt to fetch the issue from Linear using the MCP server:
+      - Use the Linear MCP tools to fetch the issue by identifier
+      - Extract the issue title and description
+
+   2. If the Linear MCP is not configured or the fetch fails:
+      - Inform the user: "I couldn't fetch the ticket from Linear. This might be because the Linear MCP server isn't configured."
+      - Provide setup instructions:
+        ```
+        To configure Linear MCP, run:
+        claude mcp add --transport sse linear https://mcp.linear.app/sse
+        Then run /mcp to authenticate.
+        ```
+      - Ask: "Would you like to paste the ticket details manually, or configure Linear MCP first?"
+      - Wait for user input before proceeding
+
+   3. If the fetch succeeds, present the ticket details:
+      ```
+      I found the following details for [TICKET-ID]:
+
+      **Title:** [Issue title]
+
+      **Description:**
+      [Issue description/acceptance criteria]
+
+      Is this information sufficient to start planning, or would you like to add additional context?
+      For example:
+      - Relevant files or directories (especially useful in monorepos)
+      - Technical constraints or requirements not in the ticket
+      - Related systems or dependencies to consider
+      ```
+
+   4. Wait for user confirmation or additional context before proceeding to research
+
+2. **If no ticket ID provided** (or no parameters at all), respond with:
 
 ```
 I'll help you create a detailed implementation plan. Let me start by understanding what we're building.

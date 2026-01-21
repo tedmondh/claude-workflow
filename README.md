@@ -1,6 +1,6 @@
 # Claude Code Workflow Tools
 
-A collection of custom agents and slash commands for Claude Code that streamline code exploration, planning, and implementation.
+A collection of slash commands for Claude Code that streamline code exploration, planning, and implementation.
 
 ## Installation
 
@@ -20,8 +20,8 @@ After installation, run `/help` to see the newly available commands.
 
 ```bash
 # 1. Create a detailed implementation plan
-/claude-workflow:create_plan thoughts/shared/tickets/your-ticket.md
-# or just: /claude-workflow:create_plan (it will prompt you)
+/claude-workflow:create_plan ADP-123
+# or just: /claude-workflow:create_plan (it will prompt you for requirements)
 
 # 2. Execute the plan (provide the file path as an argument)
 /claude-workflow:implement_plan thoughts/shared/plans/your-plan.md
@@ -30,13 +30,40 @@ After installation, run `/help` to see the newly available commands.
 /claude-workflow:validate_plan thoughts/shared/plans/your-plan.md
 ```
 
-**Note**: File paths must be provided as command arguments. While you can use `@` for file autocomplete in regular messages, slash commands require the path as a text argument.
+## Linear Integration (Optional)
+
+The `/create_plan` command can automatically fetch ticket details from Linear when you provide a ticket ID:
+
+```bash
+/claude-workflow:create_plan ADP-123
+```
+
+### Setup
+
+To enable Linear integration, configure the Linear MCP server:
+
+```bash
+claude mcp add --transport sse linear https://mcp.linear.app/sse
+```
+
+Then authenticate by running `/mcp` in Claude Code and following the prompts.
+
+### Usage
+
+Once configured, simply pass a ticket ID to create_plan:
+
+```bash
+/claude-workflow:create_plan ENG-456
+```
+
+The command will fetch the ticket's title and description, then ask if you want to add additional context (files, directories, constraints) before planning begins.
+
+If Linear MCP isn't configured, you'll be prompted to either set it up or paste the ticket details manually.
 
 ## Structure
 
 ```
 .
-├── agents/           # Specialized agents for code exploration
 └── commands/         # Slash commands for structured workflows
 ```
 
@@ -61,16 +88,6 @@ Executes approved plans phase-by-phase with automated verification.
 Validates implementation completeness and generates verification report.
 
 **Process**: Review commits → Run all checks → Compare to plan → Document deviations → Report status
-
-## Agents
-
-Specialized agents used during planning (primarily by `/claude-workflow:create_plan`):
-
-- **codebase-locator**: Finds WHERE code lives (files, directories, components)
-- **codebase-analyzer**: Understands HOW code works (implementation details, data flow)
-- **codebase-pattern-finder**: Locates similar implementations to model after
-
-All agents follow a "documentarian, not critic" approach - they describe what exists without suggesting improvements.
 
 ## File Conventions
 

@@ -11,8 +11,8 @@
     {
       "name": "claude-workflow-tools",
       "source": "./",
-      "description": "Complete workflow toolkit with specialized agents and slash commands for systematic code development",
-      "version": "1.1.0",
+      "description": "Complete workflow toolkit with slash commands for systematic code development",
+      "version": "1.2.0",
       "author": {
         "name": "Tedmond"
       },
@@ -22,7 +22,7 @@
         "implementation",
         "validation",
         "codebase-exploration",
-        "agents"
+        "linear"
       ],
       "category": "Workflow"
     }
